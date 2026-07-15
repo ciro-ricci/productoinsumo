@@ -314,6 +314,27 @@
         const formSection = document.getElementById('form-section');
         const actionsSection = document.getElementById('actions-section');
 
+        // "Recordar" registro en esta PC por 30 días
+        const REGISTRO_KEY = 'ip_registro_coninagro';
+        const REGISTRO_DIAS = 30;
+
+        function mostrarAccesoDirecto() {
+            formSection.classList.add('hidden');
+            actionsSection.classList.remove('hidden');
+        }
+
+        (function chequearRegistroPrevio() {
+            try {
+                const guardado = JSON.parse(localStorage.getItem(REGISTRO_KEY));
+                const vigente = guardado && guardado.ts && (Date.now() - guardado.ts) < REGISTRO_DIAS * 24 * 60 * 60 * 1000;
+                if (vigente) {
+                    mostrarAccesoDirecto();
+                }
+            } catch (err) {
+                // Si localStorage no está disponible, simplemente se pide el formulario
+            }
+        })();
+
         form.addEventListener('submit', function(e) {
             e.preventDefault(); // Evita recargar la página
 
@@ -332,6 +353,13 @@
             }).catch(function(err) {
                 console.error('Error al guardar en Sheet:', err);
             });
+
+            // Recordar en esta PC para no volver a pedir el formulario
+            try {
+                localStorage.setItem(REGISTRO_KEY, JSON.stringify({ ts: Date.now() }));
+            } catch (err) {
+                // Si localStorage no está disponible, no pasa nada, solo no se recordará
+            }
 
             // Efecto de transición
             formSection.style.opacity = '0';
