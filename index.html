@@ -323,6 +323,16 @@
             const data = Object.fromEntries(formData.entries());
             console.log('Datos enviados:', data);
 
+            // Guardar en Google Sheet vía Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbz6XBwsjMh1SYoDlg_u74fghBwR--Zg-aze9flvHdgChaSsx5maRoAT9McpWYwHZURHWA/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(data)
+            }).catch(function(err) {
+                console.error('Error al guardar en Sheet:', err);
+            });
+
             // Efecto de transición
             formSection.style.opacity = '0';
             setTimeout(() => {
