@@ -280,6 +280,21 @@ tr:hover td{background:var(--bg-2)}
 </style>
 </head>
 <body>
+<script>
+(function () {
+    var REGISTRO_KEY = 'ip_registro_coninagro';
+    var REGISTRO_DIAS = 30;
+    try {
+        var guardado = JSON.parse(localStorage.getItem(REGISTRO_KEY));
+        var vigente = guardado && guardado.ts && (Date.now() - guardado.ts) < REGISTRO_DIAS * 24 * 60 * 60 * 1000;
+        if (!vigente) {
+            window.location.replace('https://productoinsumo.netlify.app/');
+        }
+    } catch (err) {
+        window.location.replace('https://productoinsumo.netlify.app/');
+    }
+})();
+</script>
 <div id="app">
 
 <!-- DEVICE SELECTOR -->
