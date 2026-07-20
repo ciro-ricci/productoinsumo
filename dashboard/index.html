@@ -288,10 +288,10 @@ tr:hover td{background:var(--bg-2)}
         var guardado = JSON.parse(localStorage.getItem(REGISTRO_KEY));
         var vigente = guardado && guardado.ts && (Date.now() - guardado.ts) < REGISTRO_DIAS * 24 * 60 * 60 * 1000;
         if (!vigente) {
-            window.location.replace('https://productoinsumo.netlify.app/');
+            window.location.replace('/');
         }
     } catch (err) {
-        window.location.replace('https://productoinsumo.netlify.app/');
+        window.location.replace('/');
     }
 })();
 </script>
