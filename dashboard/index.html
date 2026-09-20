@@ -895,7 +895,7 @@ function showProductDetail(key, idx) {
   document.getElementById('dtitle-' + key).innerHTML = '<span class="dtitle-icon">' + iconFor(ins.full) + '</span>' + esc(nmEntry[0]);
   document.getElementById('ddesc-'  + key).textContent = ins.desc;
   document.getElementById('sv-last-'+ key).textContent = fmtNum(ins.last, 2);
-  document.getElementById('sv-unit-'+ key).textContent = ins.desc.includes('tn') ? 'tn / unidad' : 'kg / unidad';
+  document.getElementById('sv-unit-'+ key).textContent = ins.desc.split(' ')[0] + ' / unidad';
   const v1 = ins.var1y, v5 = ins.var5y;
   const e1 = document.getElementById('sv-1y-' + key);
   const e5 = document.getElementById('sv-5y-' + key);
@@ -908,7 +908,7 @@ function showProductDetail(key, idx) {
   const u5 = e5.parentNode.querySelector('.sunit'); if(u5) u5.textContent='';
 
   // Absolute variations
-  const unit = ins.desc.includes('tn') ? 'tn' : 'kg';
+  const unit = ins.desc.split(' ')[0];
   const abs1y = ins.last - (ins.last / (1 + v1 / 100));
   const abs5y = ins.last - ins.avg5y;
   const sa1y = document.getElementById('sa-1y-' + key);
@@ -1287,7 +1287,7 @@ function openMobileDetail(key, idx) {
   document.getElementById('d-desc').textContent = ins.desc;
 
   // Stats
-  const unit = ins.desc.includes('tn') ? 'tn' : 'kg';
+  const unit = ins.desc.split(' ')[0];
   document.getElementById('d-last').textContent = fmtNum(ins.last, 2);
   document.getElementById('d-unit').textContent = unit + ' / unidad';
 
